@@ -2,11 +2,14 @@ DROP TABLE IF EXISTS package_update;
 DROP TABLE IF EXISTS package;
 DROP TABLE IF EXISTS provider;
 DROP EXTENSION IF EXISTS pgcrypto;
+DROP TYPE IF EXISTS package_status;
+
 CREATE EXTENSION pgcrypto;
 
 CREATE TABLE provider(
   provider_name varchar(30) NOT NULL,
   password varchar(100) NOT NULL,
+  salt varchar(100) NOT NULL,
   token TEXT DEFAULT md5(random()::text) NOT NULL UNIQUE,
   PRIMARY KEY (provider_name)
 );

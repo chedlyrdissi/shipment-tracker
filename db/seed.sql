@@ -2,9 +2,11 @@ DELETE FROM package_update;
 DELETE FROM package;
 DELETE FROM provider;
 
-INSERT INTO provider(provider_name, password)
-  VALUES  ('admin', crypt('admin', gen_salt('bf', 8))),
-          ('provider', crypt('provider', gen_salt('bf', 8)));
+
+WITH newsalt AS (SELECT gen_salt('bf', 8) as salt)
+INSERT INTO provider(provider_name, password, salt)
+  VALUES  ('admin', crypt('admin', (SELECT salt from newsalt)), (SELECT salt from newsalt)),
+          ('provider', crypt('provider', (SELECT salt from newsalt)), (SELECT salt from newsalt));
 
 INSERT INTO package(provider_name, source, destination)
   VALUES

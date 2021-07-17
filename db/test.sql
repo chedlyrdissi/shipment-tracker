@@ -1,11 +1,18 @@
 -- CREATE PROVIDER
-INSERT INTO provider(provider_name, password)
-  VALUES  (<provider name>, crypt(<pw>, gen_salt('bf', 8)))
+WITH newsalt AS (SELECT gen_salt('bf', 8) AS salt)
+INSERT INTO provider(provider_name, password, salt)
+  VALUES  (<provider name>, crypt(<pw>, (SELECT salt from newsalt)), (SELECT salt from newsalt))
 
 -- LOGIN
 SELECT provider_name, token
 	FROM provider
-	WHERE password == crypt(<pw>, gen_salt('bf', 8));
+	WHERE password == crypt(<pw>, salt);
+
+-- CHECK AUTHENTICATED
+SELECT COUNT(*) = 1
+	FROM provider
+	WHERE token = <token>;
+
 
 -- CREATE PACKAGE
 INSERT INTO package(provider_name, source, destination)
