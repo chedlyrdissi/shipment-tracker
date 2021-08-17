@@ -15,5 +15,3 @@ INSERT INTO package(provider_name, source, destination)
     ('provider', '6333 Willms Estate, Apt. 944, 76443, Georgiannaborough, Wyoming, Ireland', '678 Clay Mission, Suite 338, 48511-2477, Whitefurt, Texas, Ireland'),
     ('provider', '353 Lauriane Drive, Apt. 618, 6705, Weinfelden, Saint-Gall, Switzerland', '1718 Kertzmann Falls, Suite 155, 8907, Crissier, Lucerne, Switzerland'),
     ('provider', 'пл. Школьная, 567, кв. 707, 819630, Воронеж, Калужская область, Russia', 'Пушкина площадь, 973, кв. 429, 848504, Волгоград, Тульская область, Russia');
-
-

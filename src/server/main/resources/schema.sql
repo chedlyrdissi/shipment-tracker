@@ -21,7 +21,7 @@ CREATE TABLE package(
   provider_name varchar(30) NOT NULL,
   source varchar(100) NOT NULL,
   destination varchar(100) NOT NULL,
-  status package_status NOT NULL DEFAULT 'PENDING'::package_status,
+  status VARCHAR(10) NOT NULL DEFAULT 'PENDING',
   PRIMARY KEY (package_id),
   FOREIGN KEY (provider_name) REFERENCES provider(provider_name) ON DELETE CASCADE
 );
@@ -40,9 +40,25 @@ CREATE OR REPLACE FUNCTION init_package_update()
   AS
 $$
 BEGIN
-  INSERT INTO package_update(package_id, update_date) values (NEW.package_id, NOW());
+  INSERT INTO package_update(package_id, update_date, notes)
+    VALUES  (NEW.package_id, NOW(), 'Status -> CREATED, Status -> PENDING');
   RETURN NEW;
 END;
+$$;
+
+CREATE OR REPLACE FUNCTION package_status_update()
+  RETURNS TRIGGER
+  LANGUAGE PLPGSQL
+  AS
+$$
+BEGIN
+	IF NEW.status != OLD.status
+	THEN
+		INSERT INTO package_update(package_id, update_date, notes)
+			VALUES (NEW.package_id, NOW(), CONCAT('Status -> ', NEW.status));
+	END IF;
+  	RETURN NEW;
+END
 $$;
 
 CREATE TRIGGER package_created
@@ -50,3 +66,12 @@ CREATE TRIGGER package_created
   ON package
   FOR ROW
   EXECUTE PROCEDURE init_package_update();
+
+CREATE TRIGGER package_status_updated
+  AFTER UPDATE
+  ON package
+  FOR ROW
+  EXECUTE PROCEDURE package_status_update();
+
+CREATE INDEX package_update_index
+  ON package_update (package_id);

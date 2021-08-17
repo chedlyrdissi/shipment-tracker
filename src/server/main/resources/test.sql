@@ -6,7 +6,8 @@ INSERT INTO provider(provider_name, password, salt)
 -- LOGIN
 SELECT provider_name, token
 	FROM provider
-	WHERE password == crypt(<pw>, salt);
+	WHERE provider_name = <provider name>
+		AND password == crypt(<pw>, salt);
 
 -- CHECK AUTHENTICATED
 SELECT COUNT(*) = 1

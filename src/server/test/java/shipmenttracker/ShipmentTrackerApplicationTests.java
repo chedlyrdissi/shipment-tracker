@@ -1,4 +1,4 @@
-package shipmenttracker;
+shipmenttracker.package com.hermes.shipmenttracker;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
