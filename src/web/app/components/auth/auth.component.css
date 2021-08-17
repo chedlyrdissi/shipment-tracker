@@ -1,0 +1,12 @@
+.auth-grid {
+	display: inline-grid;
+	text-align: center;
+}
+
+.invalid-input {
+	border: 2px solid red;
+}
+
+.invalid-input-label {
+	color: red;
+}

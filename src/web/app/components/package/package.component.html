@@ -1,0 +1,46 @@
+<div *ngIf="this.getPackage() !== null; else loadingPackage">
+  package
+  <div>
+    <label>Package id: </label>
+    {{ this.getPackage().packageId }}
+  </div>
+  <div>
+    <label>Provider: </label>
+    {{ this.getPackage().providerName }}
+  </div>
+  <div>
+    <label>Package source: </label>
+    {{ this.getPackage().source }}
+  </div>
+  <div>
+    <label>Package destination: </label>
+    {{ this.getPackage().destination }}
+  </div>
+  <div>
+    <label>Package status: </label>
+    {{ this.getPackage().status }}
+  </div>
+</div>
+<ng-template #loadingPackage>
+  Loading Package
+</ng-template>
+<div *ngIf="this.getPackageUpdates() !== null; else loadingPackageUpdates">
+	package updates
+	<div *ngFor="let pkgUpdate of this.getPackageUpdates()">
+		<div>
+			<label>Package Id:</label>
+			{{ pkgUpdate.packageId }}
+		</div>
+		<div>
+			<label>Package update date:</label>
+			{{ pkgUpdate.updateDate }}
+		</div>
+		<div>
+			<label>notes:</label>
+			{{ pkgUpdate.notes }}
+		</div>
+	</div>
+</div>
+<ng-template #loadingPackageUpdates>
+  Loading package updates
+</ng-template>

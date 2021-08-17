@@ -1,0 +1,15 @@
+<header>
+  <a [routerLink]="['/']">
+    Shipment Tracker
+  </a>
+
+  <div class="user-menu">
+    <a *ngIf="this.isLoggedIn(); else logIn">
+      <label>{{ this.getProviderName() }}</label>
+      <a (click)="this.logOut()">Log out</a>
+    </a>
+    <ng-template #logIn>
+      <a (click)="this.navigateLogIn()">Log in</a>
+    </ng-template>
+  </div>
+</header>

@@ -1,0 +1,15 @@
+<div>
+  search
+  <input type="search" name="search" autocomplete="off" (search)="this.runSearch(search.value, $event)" #search/>
+  <button (click)="this.runSearch(search.value)" (keyDown)="this.runSearch(search.value)">Search</button>
+  <div class="pkg-container">
+    <search-package *ngFor="let pkg of this.getPackages()"
+      [packageId]="pkg.packageId"
+      [providerName]="pkg.providerName"
+      [source]="pkg.source"
+      [destination]="pkg.destination"
+      [status]="pkg.status"
+      (click)="this.emit(pkg)"
+    ></search-package>
+  </div>
+</div>
