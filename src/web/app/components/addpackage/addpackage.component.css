@@ -1,0 +1,12 @@
+.create-pkg-container {
+	max-width: 300px;
+	width: fit-content;
+}
+
+.create-pkg-labels {
+	min-width: 100px;
+}
+
+.no-b {
+	border:  none;
+}

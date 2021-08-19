@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from '@services/auth.service';
 
 
@@ -9,9 +9,9 @@ import { AuthService } from '@services/auth.service';
   styleUrls: ['./header.component.css']
 })
 export class HeaderComponent {
-
   constructor(
     private authService: AuthService,
+    private actRoute: ActivatedRoute,
     private router: Router
   ) {}
 
@@ -24,10 +24,42 @@ export class HeaderComponent {
   }
 
   navigateLogIn(): void {
-    this.router.navigate(['/login'], { queryParams: { redirect: this.router.routerState.snapshot.url }});
+    this.navigate("/login")
+  }
+
+  navigateSignUp(): void {
+    this.navigate("/signup")
+  }
+
+  navigate(target: string): void {
+    const splitUrl = this.router.routerState.snapshot.url.split('?');
+    if (splitUrl[0] === target) {
+      return
+    }
+    if(target === '/signup' && splitUrl[0] === '/login'
+      || target === '/login' && splitUrl[0] === '/signup') {
+      this.router.navigateByUrl(`${target}${splitUrl.length > 1? '?' + splitUrl[1]: ''}`);
+      return
+    }
+    if (target === '/signup' || target === '/login') {
+      this.router.navigate([target], {
+        queryParams: {
+          redirect: this.router.routerState.snapshot.url
+        }
+      });
+      return
+    }
   }
 
   logOut(): void {
     this.authService.logOut();
   }
 }
+
+// signup signup => nothing
+// login login => nothing
+// signup login => go login + copy only params
+// login signup => go signup + copy only params
+// none signup => navigate + copy url
+// none login => navigate + copy url
+

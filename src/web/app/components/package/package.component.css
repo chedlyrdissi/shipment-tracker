@@ -1,0 +1,39 @@
+.update-circle {
+	width: 20px;
+	height: 20px;
+	margin: auto;
+	border-radius: 20px;
+	background: black;
+
+	left: calc(50% - 10px);
+	top: calc(50% - 10px);
+}
+
+.update-stick {
+	height: 50%;
+    width: 10px;
+    background: black;
+    margin: auto;
+}
+
+.update-stick-top {
+	left: calc(50% - 5px);
+	top: 0;
+}
+
+.update-stick-bottom {
+	left: calc(50% - 5px);
+	bottom: 0;
+}
+
+.pkg-update-date {
+	margin: auto;
+}
+
+.p-relative {
+	position: relative;
+}
+
+.p-absolute {
+	position: absolute;
+}

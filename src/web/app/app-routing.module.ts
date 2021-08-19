@@ -10,11 +10,18 @@ import { HomeComponent } from '@components/containers/home/home.component';
 import { PackageModule } from '@components/package/package.module';
 import { PackageComponent } from '@components/package/package.component';
 
+import { AddPackageModule } from '@components/addpackage/addpackage.module';
+import { AddPackageComponent } from '@components/addpackage/addpackage.component';
+
+import { AuthService } from '@services/auth.service';
+
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
   { path: 'package', component: PackageComponent },
-  { path: 'login', component: AuthComponent },
+  { path: 'signup', component: AuthComponent, data: { login: false } },
+  { path: 'login', component: AuthComponent, data: { login: true } },
+  { path: 'add', component: AddPackageComponent, canActivate: [ AuthService ] },
   { path: '**', redirectTo: '/'}
 ];
 
@@ -23,7 +30,8 @@ const routes: Routes = [
     RouterModule.forRoot(routes),
     AuthModule,
     ContainersModule,
-    PackageModule
+    PackageModule,
+    AddPackageModule
   ],
   exports: [RouterModule]
 })

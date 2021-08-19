@@ -35,8 +35,11 @@ public class PackageUpdateController {
   }
 
   @GetMapping
-  public List<PackageUpdate> getPackageUpdateByPackageId(@RequestParam(required = true, name = "packageId") int packageId) {
-    return this.packageUpdateRepository.findByPackageId(packageId);
+  public List<PackageUpdate> getPackageUpdateByPackageId(@RequestParam(required = true, name = "packageId") int packageId) throws Exception {
+    if(this.packageRepository.existsById(packageId)) {
+      return this.packageUpdateRepository.findByPackageId(packageId);
+    }
+    throw new Exception("Invalid package id.");
   }
 
   @PostMapping("/{packageId}")

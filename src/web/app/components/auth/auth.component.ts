@@ -12,6 +12,7 @@ import { Provider } from '@models/provider.model';
 export class AuthComponent {
 
   errorMsg: string = null;
+  isLogIn: boolean = true;
 
   constructor(
     private authService: AuthService,
@@ -21,6 +22,7 @@ export class AuthComponent {
     this.handleSuccess = this.handleSuccess.bind(this);
     this.handleError = this.handleError.bind(this);
     this.clearError = this.clearError.bind(this);
+    actRoute.data.subscribe(({ login }) => this.isLogIn = login);
   }
 
   public errorExists(): boolean {
@@ -32,12 +34,10 @@ export class AuthComponent {
   }
 
   private handleSuccess(provider: Provider): void {
-    console.log('component provider', provider);
     this.router.navigateByUrl(this.actRoute.snapshot.queryParams.redirect || '/');
   }
 
   private handleError(error: HttpErrorResponse): void {
-    console.log('component error', error);
     this.errorMsg = 'Invalid credentials'; 
     setTimeout(this.clearError, 10000);
   }

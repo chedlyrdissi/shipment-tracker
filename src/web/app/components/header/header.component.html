@@ -1,15 +1,22 @@
-<header>
-  <a [routerLink]="['/']">
-    Shipment Tracker
-  </a>
-
-  <div class="user-menu">
-    <a *ngIf="this.isLoggedIn(); else logIn">
-      <label>{{ this.getProviderName() }}</label>
-      <a (click)="this.logOut()">Log out</a>
-    </a>
-    <ng-template #logIn>
-      <a (click)="this.navigateLogIn()">Log in</a>
-    </ng-template>
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <div class="container-fluid">
+    <a class="navbar-brand" [routerLink]="['/']">Shipment Tracker</a>
+    <span class="dropdown right-menu" *ngIf="this.isLoggedIn()">
+      <button class="btn btn-light dropdown-toggle" type="button" id="userDropdownMenu" data-bs-toggle="dropdown" aria-expanded="false">
+        {{ this.getProviderName() }}
+      </button>
+      <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdownMenu">
+        <li><a class="dropdown-item" routerLink="/add">Create package</a></li>
+        <li><a class="dropdown-item" (click)="this.logOut()">Log Out</a></li>
+      </ul>
+    </span>
+    <span class="d-f">
+      <a class="navbar-text nav-link" (click)="this.navigateLogIn()" *ngIf="!this.isLoggedIn()">
+        Log in
+      </a>
+      <a class="navbar-text nav-link" (click)="this.navigateSignUp()" *ngIf="!this.isLoggedIn()">
+        Sign up
+      </a>
+    </span>
   </div>
-</header>
+</nav>

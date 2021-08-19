@@ -17,7 +17,7 @@ insert into accounts (password) values crypt(:password, gen_salt('bf', 8));
 ```sh
 psql -c "DROP DATABASE IF EXISTS shipmenttracker"
 psql -c "CREATE DATABASE shipmenttracker"
-psql shipmenttracker < ./db/schema.sql
-psql shipmenttracker < ./db/seed.sql
+psql shipmenttracker < ./src/server/main/resources/schema.sql
+psql shipmenttracker < ./src/server/main/resources/data.sql
 ```
 

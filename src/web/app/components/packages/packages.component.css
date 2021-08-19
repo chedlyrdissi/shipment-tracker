@@ -1,3 +1,8 @@
-.pkg-container {
-	width: 100%;
+.search-input, .search-input:focus-visible {
+	border-radius: 1em;
+	outline: none;
+}
+
+.pkgs-container {
+	max-width: max-content;
 }

@@ -7,7 +7,7 @@ import { environment } from 'src/web/environments/environment';
 @Injectable()
 export class SearchService {
 
-  private packages: Package[] = [];
+  private packages: Package[] | null = null;
   
   constructor(private http: HttpClient) {}
 
@@ -18,7 +18,7 @@ export class SearchService {
       });
   }
 
-  public getPackages(): Package[] {
+  public getPackages(): Package[] | null {
     return this.packages;
   }
 }

@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { ActivatedRouteSnapshot, CanActivate, RouterStateSnapshot } from '@angular/router';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { catchError } from 'rxjs/operators';
 import { Observable } from 'rxjs';
@@ -6,7 +7,7 @@ import { Provider } from '@models/provider.model';
 import { environment } from 'src/web/environments/environment';
 
 @Injectable()
-export class AuthService {
+export class AuthService implements CanActivate {
 
 	constructor(private http: HttpClient) {}
 
@@ -36,6 +37,10 @@ export class AuthService {
 		return this.getFromSession().providerName;		
 	}
 
+	public getToken(): string {
+		return this.getFromSession().token;		
+	}
+
 	private saveToSession(provider: Provider): void {
 		sessionStorage.setItem('provider', JSON.stringify(provider));
 	}
@@ -43,4 +48,11 @@ export class AuthService {
 	private getFromSession(): Provider {
 		return JSON.parse(sessionStorage.getItem('provider'));
 	}
+
+	canActivate(
+    route: ActivatedRouteSnapshot,
+    state: RouterStateSnapshot
+  ): boolean {
+    return this.isLoggedIn();
+  }
 }

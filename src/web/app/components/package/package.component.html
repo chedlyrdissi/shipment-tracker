@@ -1,46 +1,99 @@
-<div *ngIf="this.getPackage() !== null; else loadingPackage">
-  package
-  <div>
-    <label>Package id: </label>
-    {{ this.getPackage().packageId }}
+<div class="m-5" *ngIf="this.getPackage() !== null; else loadingPackage">
+  <h3>Package:</h3>
+  <div class="row my-2">
+    <label class="col">Package id: </label>
+    <label class="col">{{ this.getPackage().packageId }}</label>
   </div>
-  <div>
-    <label>Provider: </label>
-    {{ this.getPackage().providerName }}
+  <div class="row my-2">
+    <label class="col">Provider: </label>
+    <label class="col">{{ this.getPackage().providerName }}</label>
   </div>
-  <div>
-    <label>Package source: </label>
-    {{ this.getPackage().source }}
+  <div class="row my-2">
+    <label class="col">Package source: </label>
+    <textarea
+      class="col"
+      [readonly]="!this.isEdit()"
+      wrap="soft"
+      [ngModel]="this.sourceModel"
+      #source
+    ></textarea>
   </div>
-  <div>
-    <label>Package destination: </label>
-    {{ this.getPackage().destination }}
+  <div class="row my-2">
+    <label class="col">Package destination: </label>
+    <textarea
+      class="col"
+      [readonly]="!this.isEdit()"
+      wrap="soft"
+      [ngModel]="this.destModel"
+      #destination
+    ></textarea>
   </div>
-  <div>
-    <label>Package status: </label>
-    {{ this.getPackage().status }}
+  <div class="row my-2">
+    <label class="col">Package status: </label>
+    <select
+      class="col"
+      name="status"
+      (change)="this.updateSelectModel($event)"
+      *ngIf="this.isEdit()"
+      #statusSelect
+    >
+      <option value="PENDING">PENDING</option>
+      <option value="DELIVERED">DELIVERED</option>
+      <option value="CANCELED">CANCELED</option>
+    </select>
+    <label class="col" *ngIf="!this.isEdit()">{{ this.getPackage().status }}</label>
+  </div>
+  <div class="my-2 link-danger" *ngIf="this.errorMsg !== null">
+    {{ this.errorMsg }}    
+  </div>
+  <div class="text-center my-2" *ngIf="this.isEdit()">
+    <button class="btn btn-light" (click)="this.saveChanges()">Save</button>
   </div>
 </div>
+
 <ng-template #loadingPackage>
-  Loading Package
+  <div class="link-danger text-center" *ngIf="this.getPackageError() !== null; else packageError">
+    {{ this.getPackageError() }}
+  </div>
+  <ng-template #packageError>
+    <div class="text-center">
+      <div class="spinner-border" role="status"></div>
+      <div>Loading Package</div>
+    </div>
+  </ng-template>
 </ng-template>
-<div *ngIf="this.getPackageUpdates() !== null; else loadingPackageUpdates">
-	package updates
-	<div *ngFor="let pkgUpdate of this.getPackageUpdates()">
-		<div>
-			<label>Package Id:</label>
-			{{ pkgUpdate.packageId }}
-		</div>
-		<div>
-			<label>Package update date:</label>
-			{{ pkgUpdate.updateDate }}
-		</div>
-		<div>
-			<label>notes:</label>
-			{{ pkgUpdate.notes }}
-		</div>
+
+<div class="m-5" *ngIf="this.getPackageUpdates() !== null; else loadingPackageUpdates">
+	<h3>Package Updates</h3>
+	<div class="row" *ngFor="let pkgUpdate of this.getPackageUpdates(); let i = index">
+    <div class="col-1">
+      <div class="h-100 w-100 p-relative update-block">
+        <div class="update-stick update-stick-top p-absolute" *ngIf="i !== 0"></div>
+        <div class="update-circle p-absolute"></div>
+        <div class="update-stick update-stick-bottom p-absolute" *ngIf="i !== this.getPackageUpdates().length - 1"></div>
+      </div>
+    </div>
+		<div class="col pkg-update-date">{{ this.formatDate(pkgUpdate.updateDate) }}</div>
+		<div class="col"><textarea class="w-100" readonly>{{pkgUpdate.notes}}</textarea></div>
 	</div>
+  <div class="text-center my-2" *ngIf="this.isEdit()">
+    <div>
+      <textarea #newNote></textarea>
+    </div>
+    <div>
+      <button class="btn btn-light" (click)="this.addNote(newNote.value)">Add note</button>
+    </div>
+  </div>
 </div>
+
 <ng-template #loadingPackageUpdates>
-  Loading package updates
+  <div class="link-danger text-center" *ngIf="this.getPackageUpdatesError() !== null; else packageUpdatesError">
+    {{ this.getPackageUpdatesError() }}
+  </div>
+  <ng-template #packageUpdatesError>
+    <div class="text-center">
+      <div class="spinner-border" role="status"></div>
+      <div>Loading package updates</div>
+    </div>
+  </ng-template>
 </ng-template>

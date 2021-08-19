@@ -1,35 +1,27 @@
 <form class="auth-grid w-100" method="POST" (submit)="this.submit(providerName.value, password.value)">
-	<label>Auth</label>
-	<p *ngIf="this.errorExists()">{{this.errorMsg}}</p>
-	<div class="row">
-		<label
-			[ngClass]="{'col': true, 'invalid-input-label': this.errorExists()}"
-			for="providerName">
-			Provider name
-		</label>
-		<input
-			id="providerName"
-			[ngClass]="{'col': true, 'invalid-input': this.errorExists()}"
-			type="text"
-			name="providerName"
-			required
-			#providerName
-		/>
-	</div>
-	<div class="row">
-		<label
-			[ngClass]="{'col': true, 'invalid-input-label': this.errorExists()}"
-			for="password">
-			Password
-		</label>
-		<input
-			id="password"
-			[ngClass]="{'col': true, 'invalid-input': this.errorExists()}"
-			type="password"
-			name="password"
-			required
-			#password
-		/>
-	</div>
-	<button>Log in</button>
+  <label>Auth</label>
+  <p class="link-danger" *ngIf="this.errorExists()">{{this.errorMsg}}</p>
+  <div class="input-group mb-3">
+    <span class="input-group-text w-25 text-center">Provider</span>
+    <input
+      [ngClass]="{'col form-control': true, 'invalid-input': this.errorExists()}"
+      type="text"
+      name="providerName"
+      required
+      #providerName
+    />
+  </div>
+  <div class="input-group mb-3">
+    <span class="input-group-text w-25 text-center">Password</span>
+    <input
+      [ngClass]="{'col form-control': true, 'invalid-input': this.errorExists()}"
+      type="password"
+      name="password"
+      required
+      #password
+    />
+  </div>
+  <button class="btn btn-light btn-login">
+    {{ this.isLogIn? 'Log in': 'Sign up' }}
+  </button>
 </form>

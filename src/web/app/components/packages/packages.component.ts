@@ -20,7 +20,7 @@ export class PackagesComponent {
     this.query.emit(query);
   }
 
-  public getPackages(): Package[] {
+  public getPackages(): Package[] | null {
     return this.searchService.getPackages();
   }
 

@@ -10,3 +10,8 @@
 .invalid-input-label {
 	color: red;
 }
+
+.btn-login {
+	width: fit-content;
+	place-self: center;
+}

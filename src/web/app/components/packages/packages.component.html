@@ -1,9 +1,22 @@
-<div>
-  search
-  <input type="search" name="search" autocomplete="off" (search)="this.runSearch(search.value, $event)" #search/>
-  <button (click)="this.runSearch(search.value)" (keyDown)="this.runSearch(search.value)">Search</button>
-  <div class="pkg-container">
-    <search-package *ngFor="let pkg of this.getPackages()"
+<div class="mt-3 text-center">
+  <div class="input-group mb-3 justify-content-center">
+    <input
+      type="search"
+      name="search"
+      class="search-input"
+      autocomplete="off"
+      (search)="this.runSearch(search.value, $event)" #search/>
+    <span
+      class="input-group-text btn btn-light mx-3"
+      (click)="this.runSearch(search.value)"
+      (keyDown)="this.runSearch(search.value)">
+      Search
+    </span>
+  </div>
+
+  <div class="m-auto pkgs-container" *ngIf="this.getPackages() == null || this.getPackages().length > 0; else noPkgsFound">
+    <search-package
+      *ngFor="let pkg of this.getPackages()"
       [packageId]="pkg.packageId"
       [providerName]="pkg.providerName"
       [source]="pkg.source"
@@ -12,4 +25,9 @@
       (click)="this.emit(pkg)"
     ></search-package>
   </div>
+  <ng-template #noPkgsFound>
+    <div class="m-auto pkgs-container">
+      No packages found
+    </div>
+  </ng-template>
 </div>
